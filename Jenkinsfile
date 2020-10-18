@@ -1,21 +1,27 @@
 pipeline{
         agent any
         stages{
-              stage('Start'){
+              stage('Test Phase Starts'){
                 steps{
-                echo 'start the pipeline'
+                echo 'start the test phase'
                 }
               }
               
-              stage('Clean'){
+              stage('Test'){
                 steps{
-                sh 'mvn clean'
+                sh 'mvn test'
                 }
               }
               
-              stage('Install'){
+              stage('Sonar phase starts'){
                 steps{
-                sh 'mvn install'
+                echo 'start the sonar phase'
+                }
+              }
+                
+                stage('Sonar'){
+                steps{
+                sh 'mvn sonar:sonar -Dsonar.host.url=http://localhost:9000 -Dsonar.analysis.mode=publish'
                 }
               }
         }
